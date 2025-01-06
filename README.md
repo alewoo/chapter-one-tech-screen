@@ -23,18 +23,11 @@ A simple task management application built with React Native and Expo.
    npx expo start
    ```
 
-3. Run the app on your preferred platform:
-   - Press `a` to run on Android emulator
-   - Press `i` to run on iOS simulator
-   - Press `w` to run in web browser
-   - Scan QR code with Expo Go app on your device
-
 ## Development
 
 This project uses:
 
 - React Native with Expo
-- TypeScript for type safety
 - File-based routing with Expo Router
 - Local state management with React hooks
 
