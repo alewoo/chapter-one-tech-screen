@@ -16,7 +16,18 @@ type Task = {
 
 export default function Index() {
   // state to store our tasks
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([
+    {
+      id: "1",
+      text: "Welcome! Try adding a new task",
+      completed: false,
+    },
+    {
+      id: "2",
+      text: "This is a completed task example",
+      completed: true,
+    },
+  ]);
   // state to create a new task
   const [newTask, setNewTask] = useState("");
 
@@ -58,6 +69,7 @@ export default function Index() {
           value={newTask}
           onChangeText={setNewTask}
           placeholder="Enter a new task"
+          placeholderTextColor="#666"
         />
         <TouchableOpacity style={styles.addButton} onPress={addTask}>
           <Text style={styles.addButtonText}>Add</Text>
@@ -65,27 +77,53 @@ export default function Index() {
       </View>
 
       <View style={styles.taskList}>
-        {tasks.map((task) => (
-          <View key={task.id} style={styles.task}>
-            <TouchableOpacity
-              style={styles.checkbox}
-              onPress={() => toggleTask(task.id)}
-            >
-              {task.completed && <Text>✓</Text>}
-            </TouchableOpacity>
-            <Text
-              style={[styles.taskText, task.completed && styles.completedTask]}
-            >
-              {task.text}
-            </Text>
-            <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={() => deleteTask(task.id)}
-            >
-              <Text style={styles.deleteButtonText}>×</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+        {/* active tasks section */}
+        <Text style={styles.sectionTitle}>Active Tasks</Text>
+        {tasks
+          .filter((task) => !task.completed)
+          .map((task) => (
+            <View key={task.id} style={styles.task}>
+              <TouchableOpacity
+                style={styles.checkbox}
+                onPress={() => toggleTask(task.id)}
+              >
+                {task.completed && <Text>✓</Text>}
+              </TouchableOpacity>
+              <Text style={styles.taskText}>{task.text}</Text>
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => deleteTask(task.id)}
+              >
+                <Text style={styles.deleteButtonText}>×</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+
+        {/* completed tasks section */}
+        <Text style={[styles.sectionTitle, styles.completedTitle]}>
+          Completed Tasks
+        </Text>
+        {tasks
+          .filter((task) => task.completed)
+          .map((task) => (
+            <View key={task.id} style={[styles.task, styles.completedTaskRow]}>
+              <TouchableOpacity
+                style={styles.checkbox}
+                onPress={() => toggleTask(task.id)}
+              >
+                <Text>✓</Text>
+              </TouchableOpacity>
+              <Text style={[styles.taskText, styles.completedTask]}>
+                {task.text}
+              </Text>
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => deleteTask(task.id)}
+              >
+                <Text style={styles.deleteButtonText}>×</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
       </View>
     </View>
   );
@@ -160,5 +198,17 @@ const styles = StyleSheet.create({
     color: "#ff0000",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  completedTitle: {
+    color: "#888",
+  },
+  completedTaskRow: {
+    opacity: 0.7,
   },
 });
