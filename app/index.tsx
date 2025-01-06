@@ -34,6 +34,20 @@ export default function Index() {
     setNewTask(""); // clear the input
   };
 
+  // function to toggle task completion
+  const toggleTask = (id: string) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  // function to delete a task
+  const deleteTask = (id: string) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Task manager</Text>
@@ -53,7 +67,23 @@ export default function Index() {
       <View style={styles.taskList}>
         {tasks.map((task) => (
           <View key={task.id} style={styles.task}>
-            <Text>{task.text}</Text>
+            <TouchableOpacity
+              style={styles.checkbox}
+              onPress={() => toggleTask(task.id)}
+            >
+              {task.completed && <Text>✓</Text>}
+            </TouchableOpacity>
+            <Text
+              style={[styles.taskText, task.completed && styles.completedTask]}
+            >
+              {task.text}
+            </Text>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => deleteTask(task.id)}
+            >
+              <Text style={styles.deleteButtonText}>×</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </View>
@@ -100,8 +130,35 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   task: {
+    flexDirection: "row",
+    alignItems: "center",
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  taskText: {
+    flex: 1,
+  },
+  completedTask: {
+    textDecorationLine: "line-through",
+    color: "#888",
+  },
+  deleteButton: {
+    padding: 8,
+  },
+  deleteButtonText: {
+    color: "#ff0000",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
