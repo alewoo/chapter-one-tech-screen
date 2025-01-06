@@ -1,6 +1,6 @@
 # Task Manager App - Chapter One Tech Screen
 
-![IMG_0C887144BD3E-1](https://github.com/user-attachments/assets/77d256e0-5838-4213-ab20-1d1b1701d253)
+<img width="531" alt="scren" src="https://github.com/user-attachments/assets/7a7273cc-77b9-4a67-8141-1b230ba1529f" />
 
 A simple task management application built with React Native and Expo.
 
